@@ -78,7 +78,18 @@ class IceCreamApp(QMainWindow):
         if not file_path:
             return
 
-       
+        self.temperatures.clear()
+        self.revenues.clear()
+
+        with open(file_path, "r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+            next(reader)
+            for row in reader:
+                if row:
+                    self.temperatures.append(float(row[0]))
+                    self.revenues.append(float(row[1]))
+
+        self.plot_data()
 
     def plot_data(self):
         self.ax.clear()
