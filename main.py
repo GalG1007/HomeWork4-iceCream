@@ -27,7 +27,8 @@ class IceCreamApp(QMainWindow):
         self.setWindowTitle("Ice Cream Profits Analyzer")
         self.resize(800, 620)
 
-        
+        self.temperatures = []
+        self.revenues = []
 
         self._setup_ui()
         self.plot_data() 
