@@ -94,21 +94,32 @@ class IceCreamApp(QMainWindow):
     def plot_data(self):
         self.ax.clear()
 
-       
         if not self.temperatures:
+            x = np.linspace(0, 2 * np.pi, 100)
+            y = np.sin(x)
+            self.ax.plot(x, y, label="sin(x)")
+            self.ax.set_xlabel("x")
+            self.ax.set_ylabel("y")
+            self.ax.set_title("Temporary Graph")
+            self.ax.legend()
+            self.canvas.draw()
             return
 
-        self.ax.scatter(self.temperatures, self.revenues, s=1, color="#2563eb", label="Daily Sales")
-        self.ax.set_title("Ice Cream Truck Revenue vs. Temperature")
-        self.ax.set_xlabel("Temperature (°C)")
-        self.ax.set_ylabel("Revenue ($)")
+        self.ax.scatter(self.temperatures, self.revenues, s=1)
 
+        m, b = np.polyfit(self.temperatures, self.revenues, 1)
+        x = np.linspace(min(self.temperatures), max(self.temperatures), 100)
+        y = m * x + b
+        self.ax.plot(x, y, color="red", label=f"y = {m:.2f}x + {b:.2f}")
+
+        self.ax.set_xlabel("Temperature")
+        self.ax.set_ylabel("Revenue")
+        self.ax.set_title("Ice Cream Revenue vs. Temperature")
         self.ax.spines["top"].set_visible(False)
         self.ax.spines["right"].set_visible(False)
-
-
-
+        self.ax.legend()
         self.canvas.draw()
+
 
     def show_about(self):
         msg = QMessageBox(self)
