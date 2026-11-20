@@ -95,9 +95,16 @@ class IceCreamApp(QMainWindow):
         self.ax.clear()
 
        
-        self.ax.plot([0, 1, 2, 3], [10, 30, 20, 40], label="Temporary Data")
-        self.ax.set_title("Temporary Graph - Load CSV to update")
-        self.ax.legend()
+        if not self.temperatures:
+            return
+
+        self.ax.scatter(self.temperatures, self.revenues, s=1, color="#2563eb", label="Daily Sales")
+        self.ax.set_title("Ice Cream Truck Revenue vs. Temperature")
+        self.ax.set_xlabel("Temperature (°C)")
+        self.ax.set_ylabel("Revenue ($)")
+
+        self.ax.spines["top"].set_visible(False)
+        self.ax.spines["right"].set_visible(False)
 
 
 
